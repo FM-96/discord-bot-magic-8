@@ -22,7 +22,7 @@ if (!botToken) {
 
 bot.on('message', function (message) {
 	if (message.isMentioned(bot.user)) {
-		message.channel.sendMessage(answers[Math.floor(Math.random() * answers.length)]).catch(function (err) {
+		message.channel.send(answers[Math.floor(Math.random() * answers.length)]).catch(function (err) {
 			console.log('Error sending message: ' + error);
 		});
 	}
