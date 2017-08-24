@@ -1,17 +1,19 @@
 var Discord = require('discord.js');
+
 var fs = require('fs');
+var path = require('path');
 
 var botToken = null;
 var bot = new Discord.Client();
 var answers = require('./answers.js');
 
-//get discord bot token
-if (!fileExists(__dirname + '/discord_bot_token.txt')) {
-	//create file
-	fs.closeSync(fs.openSync(__dirname + '/discord_bot_token.txt', 'w'));
+// get discord bot token
+if (!fileExists(path.join(__dirname, 'discord_bot_token.txt'))) {
+	// create file
+	fs.closeSync(fs.openSync(path.join(__dirname, 'discord_bot_token.txt'), 'w'));
 }
-//read token from file
-botToken = fs.readFileSync(__dirname + '/discord_bot_token.txt', 'utf8');
+// read token from file
+botToken = fs.readFileSync(path.join(__dirname, 'discord_bot_token.txt'), 'utf8');
 if (!botToken) {
 	console.log('No bot token found.');
 	console.log('Save the token in discord_bot_token.txt and restart the application.');
@@ -41,13 +43,13 @@ bot.on('warn', function (warning) {
 	console.log('Discord Warning: ' + warning);
 });
 
-//start bot
+// start bot
 bot.login(botToken);
 
-//utility functions
-function fileExists(path) {
+// utility functions
+function fileExists(filePath) {
 	try {
-		fs.statSync(path);
+		fs.statSync(filePath);
 		return true;
 	} catch (e) {
 		return false;
