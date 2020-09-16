@@ -4,7 +4,11 @@ var fs = require('fs');
 var path = require('path');
 
 var botToken = null;
-var bot = new Discord.Client();
+var bot = new Discord.Client({
+	ws: {
+		intents: Discord.Intents.NON_PRIVILEGED,
+	},
+});
 var answers = require('./answers.js');
 
 // get discord bot token
@@ -23,7 +27,10 @@ if (!botToken) {
 }
 
 bot.on('message', function (message) {
-	if (message.isMentioned(bot.user)) {
+	if (message.mentions.has(bot.user, {
+		ignoreEveryone: true,
+		ignoreRoles: true,
+	})) {
 		message.channel.send(answers[Math.floor(Math.random() * answers.length)]).catch(function (err) {
 			console.log('Error sending message: ' + err);
 		});
